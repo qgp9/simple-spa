@@ -48,9 +48,27 @@ function PageAbout() {
   document.getElementById("app").innerHTML = page;
 }
 
-const currentPath = window.location.pathname;
-if (currentPath === "/about.html") {
-  PageAbout();
-} else {
-  PageCounter();
+function handleLinks() {
+  const links = document.querySelectorAll("a");
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const href = link.getAttribute("href");
+      router(href);
+    });
+  });
 }
+
+function router(href) {
+  if (href) {
+    window.history.pushState(null, null, href);
+  }
+  const currentPath = href || window.location.pathname;
+  if (currentPath === "/about.html") {
+    PageAbout();
+  } else {
+    PageCounter();
+  }
+  handleLinks();
+}
+router()
