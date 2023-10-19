@@ -72,13 +72,6 @@ const routes = {
 };
 
 function handleLinks() {
-  const navbar = document.getElementById("navbar");
-  for (const route in routes) {
-    const link = document.createElement("a");
-    link.innerText = routes[route].name;
-    link.setAttribute("href", route);
-    navbar.appendChild(link);
-  }
   const links = document.querySelectorAll("a");
   links.forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -89,9 +82,18 @@ function handleLinks() {
   });
 }
 
+function Navbar() {
+  return div({ id: "navbar" },
+    Object.keys(routes).map((route) => {
+      const link = a({ href: route }, routes[route].name);
+      return link;
+    })
+  );
+}
+
 function App(href) {
   return div({ class: "container" },
-    div({ id: "navbar" }),
+    Navbar(),
     routes[href].component()
   );
 }
