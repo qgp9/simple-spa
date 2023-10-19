@@ -2,8 +2,6 @@ function PageCounter() {
   const page = `
       <div class="container">
         <div id="navbar">
-          <a href="/index.html">Home</a>
-          <a href="/about.html">About</a>
         </div>
         <div class="card">
           <h1>Count <span id="count-view">0</span></h1>
@@ -36,8 +34,6 @@ function PageAbout() {
   const page = `
         <div class="container">
           <div id="navbar">
-            <a href="/index.html">Home</a>
-            <a href="/about.html">About</a>
           </div>
           <div class="card">
             <h1>About</h1>
@@ -48,7 +44,34 @@ function PageAbout() {
   document.getElementById("app").innerHTML = page;
 }
 
+function PageContact() {
+  const page = `
+        <div class="container">
+          <div id="navbar">
+          </div>
+          <div class="card">
+            <h1>Contact</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing </p>
+          </div>
+        </div>
+      `;
+  document.getElementById("app").innerHTML = page;
+}
+
+const routes = {
+  "/index.html": {name: "Home", component: PageCounter},
+  "/about.html": {name: "About", component: PageAbout},
+  "/contact.html": {name: "Contact", component: PageContact},
+}
+
 function handleLinks() {
+  const navbar = document.getElementById("navbar");
+  for (const route in routes) {
+    const link = document.createElement("a");
+    link.innerText = routes[route].name;
+    link.setAttribute("href", route);
+    navbar.appendChild(link);
+  }
   const links = document.querySelectorAll("a");
   links.forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -64,11 +87,7 @@ function router(href) {
     window.history.pushState(null, null, href);
   }
   const currentPath = href || window.location.pathname;
-  if (currentPath === "/about.html") {
-    PageAbout();
-  } else {
-    PageCounter();
-  }
+  routes[currentPath].component();
   handleLinks();
 }
 router()
