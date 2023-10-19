@@ -35,7 +35,7 @@ function PageCounter() {
   const increase = () => {count++; countView.innerText = count};
   const decrease = () => {count--; countView.innerText = count};
 
-  const page = div({class:"container"},
+  return div({class:"container"},
     div({id:"navbar"}),
     div({class:"card"},
       h1("Count ", countView),
@@ -45,29 +45,26 @@ function PageCounter() {
       )
     )
   );
-  document.getElementById("app").replaceChildren(page);
 }
 
 function PageAbout() {
-  const page = div({class:"container"},
+  return div({class:"container"},
     div({id:"navbar"}),
     div({class:"card"},
       h1("About"),
       p("Lorem ipsum dolor sit amet consectetur adipisicing ")
     )
   );
-  document.getElementById("app").replaceChildren(page);
 }
 
 function PageContact() {
-  const page = div({class:"container"},
+  return div({class:"container"},
     div({id:"navbar"}),
     div({class:"card"},
       h1("Contact"),
       p("Lorem ipsum dolor sit amet consectetur adipisicing ")
     )
   );
-  document.getElementById("app").replaceChildren(page);
 }
 
 const routes = {
@@ -94,12 +91,16 @@ function handleLinks() {
   });
 }
 
+function App(href) {
+  return routes[href].component();
+}
+
 function router(href) {
   if (href) {
     window.history.pushState(null, null, href);
   }
   const currentPath = href || window.location.pathname;
-  routes[currentPath].component();
+  document.getElementById("app").replaceChildren(App(currentPath));
   handleLinks();
 }
 router()
