@@ -44,7 +44,29 @@
         countView.innerText = count;
       });
     }
-    PageCounter()
+
+    function PageAbout() {
+      const page = `
+        <div class="container">
+          <div id="navbar">
+            <a href="/index.html">Home</a>
+            <a href="/about.html">About</a>
+          </div>
+          <div class="card">
+            <h1>About2</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing </p>
+          </div>
+        </div>
+      `
+      document.getElementById('app').innerHTML = page;
+    }
+
+    const currentPath = window.location.pathname;
+    if (currentPath === '/about.html') {
+      PageAbout()
+    } else {
+      PageCounter()
+    }
   </script>
 </body>
 </html>
