@@ -45,17 +45,21 @@ function PageAbout() {
 }
 
 function PageContact() {
-  const page = `
-        <div class="container">
-          <div id="navbar">
-          </div>
-          <div class="card">
-            <h1>Contact</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing </p>
-          </div>
-        </div>
-      `;
-  document.getElementById("app").innerHTML = page;
+  const page = document.createElement("div");
+  page.classList.add("container");
+  const navbar = document.createElement("div");
+  navbar.setAttribute("id", "navbar");
+  page.appendChild(navbar);
+  const card = document.createElement("div");
+  card.classList.add("card");
+  page.appendChild(card);
+  const h1 = document.createElement("h1");
+  h1.innerText = "Contact";
+  card.appendChild(h1);
+  const p = document.createElement("p");
+  p.innerText = "Lorem ipsum dolor sit amet consectetur adipisicing ";
+  card.appendChild(p);
+  document.getElementById("app").replaceChildren(page);
 }
 
 const routes = {
