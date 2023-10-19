@@ -74,7 +74,7 @@ const routes = {
 const A = (attrs, ...children) => {
   attrs.onClick = (e) => {
     e.preventDefault();
-    router(attrs.href);
+    route(attrs.href);
   };
   return a(attrs, ...children);
 }
@@ -88,18 +88,34 @@ function Navbar() {
   );
 }
 
-function App(href) {
+function Routes({routes}) {
+  const currentPath = window.location.pathname;
+  return routes[currentPath].component()
+
+}
+
+function App() {
   return div({ class: "container" },
     Navbar(),
-    routes[href].component()
+    Routes({routes})
   );
 }
 
-function router(href) {
-  if (href) {
-    window.history.pushState(null, null, href);
-  }
-  const currentPath = href || window.location.pathname;
-  document.getElementById("app").replaceChildren(App(currentPath));
+function route(href) {
+  let currentPath = window.location.pathname;
+  if (href && href === currentPath) return;
+  window.history.pushState(null, null, href);
+  reRender();
 }
-router();
+
+let _renderArgs = {};
+function reRender() {
+  _renderArgs.container.replaceChildren(_renderArgs.component());
+}
+
+function render(component, container) {
+  _renderArgs = {component, container};
+  reRender();
+}
+
+render(App, document.getElementById("app"));
