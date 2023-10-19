@@ -2,7 +2,11 @@ function h(tag, attrs, ...children) {
   const element = document.createElement(tag);
   if (attrs instanceof Object && !Array.isArray(attrs)) {
     for (const attr in attrs) {
-      element.setAttribute(attr, attrs[attr]);
+      if (attr.startsWith("on")) {
+        element.addEventListener(attr.slice(2).toLowerCase(), attrs[attr]);
+      } else {
+        element.setAttribute(attr, attrs[attr]);
+      }
     }
   } else {
     children.unshift(attrs);
@@ -26,33 +30,22 @@ const button = (...args) => h("button", ...args);
 const span = (...args) => h("span", ...args);
 
 function PageCounter() {
+  let count = 0;
+  const countView = span({id:"count-view"}, 0);
+  const increase = () => {count++; countView.innerText = count};
+  const decrease = () => {count--; countView.innerText = count};
+
   const page = div({class:"container"},
     div({id:"navbar"}),
     div({class:"card"},
-      h1("Count", span({id:"count-view"}, 0)),
+      h1("Count ", countView),
       div({class:"btn-box"},
-        button({class:"btn btn-primary", id:"btn-increase"}, "Increase"),
-        button({class:"btn btn-danger", id:"btn-decrease"}, "Decrease")
+        button({class:"btn btn-primary", onClick: increase}, "Increase"),
+        button({class:"btn btn-danger", onClick: decrease}, "Decrease")
       )
     )
   );
   document.getElementById("app").replaceChildren(page);
-
-  const countView = document.getElementById("count-view");
-  const btnIncrease = document.getElementById("btn-increase");
-  const btnDecrease = document.getElementById("btn-decrease");
-
-  let count = 0;
-
-  btnIncrease.addEventListener("click", () => {
-    count++;
-    countView.innerText = count;
-  });
-
-  btnDecrease.addEventListener("click", () => {
-    count--;
-    countView.innerText = count;
-  });
 }
 
 function PageAbout() {
