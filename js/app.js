@@ -18,8 +18,8 @@ function h(tag, attrs, ...children) {
     } else {
       element.appendChild(document.createTextNode(child));
     }
-  })
-  return element
+  });
+  return element;
 }
 
 const div = (...args) => h("div", ...args);
@@ -31,47 +31,45 @@ const span = (...args) => h("span", ...args);
 
 function PageCounter() {
   let count = 0;
-  const countView = span({id:"count-view"}, 0);
-  const increase = () => {count++; countView.innerText = count};
-  const decrease = () => {count--; countView.innerText = count};
+  const countView = span({ id: "count-view" }, 0);
+  const increase = () => {
+    count++;
+    countView.innerText = count;
+  };
+  const decrease = () => {
+    count--;
+    countView.innerText = count;
+  };
 
-  return div({class:"container"},
-    div({id:"navbar"}),
-    div({class:"card"},
-      h1("Count ", countView),
-      div({class:"btn-box"},
-        button({class:"btn btn-primary", onClick: increase}, "Increase"),
-        button({class:"btn btn-danger", onClick: decrease}, "Decrease")
-      )
+  return div({ class: "card" },
+    h1("Count ", countView),
+    div(
+      { class: "btn-box" },
+      button({ class: "btn btn-primary", onClick: increase }, "Increase"),
+      button({ class: "btn btn-danger", onClick: decrease }, "Decrease")
     )
   );
 }
 
 function PageAbout() {
-  return div({class:"container"},
-    div({id:"navbar"}),
-    div({class:"card"},
-      h1("About"),
-      p("Lorem ipsum dolor sit amet consectetur adipisicing ")
-    )
+  return div({ class: "card" },
+    h1("About"),
+    p("Lorem ipsum dolor sit amet consectetur adipisicing ")
   );
 }
 
 function PageContact() {
-  return div({class:"container"},
-    div({id:"navbar"}),
-    div({class:"card"},
-      h1("Contact"),
-      p("Lorem ipsum dolor sit amet consectetur adipisicing ")
-    )
+  return div({ class: "card" },
+    h1("Contact"),
+    p("Lorem ipsum dolor sit amet consectetur adipisicing ")
   );
 }
 
 const routes = {
-  "/index.html": {name: "Home", component: PageCounter},
-  "/about.html": {name: "About", component: PageAbout},
-  "/contact.html": {name: "Contact", component: PageContact},
-}
+  "/index.html": { name: "Home", component: PageCounter },
+  "/about.html": { name: "About", component: PageAbout },
+  "/contact.html": { name: "Contact", component: PageContact },
+};
 
 function handleLinks() {
   const navbar = document.getElementById("navbar");
@@ -92,7 +90,10 @@ function handleLinks() {
 }
 
 function App(href) {
-  return routes[href].component();
+  return div({ class: "container" },
+    div({ id: "navbar" }),
+    routes[href].component()
+  );
 }
 
 function router(href) {
@@ -103,4 +104,4 @@ function router(href) {
   document.getElementById("app").replaceChildren(App(currentPath));
   handleLinks();
 }
-router()
+router();
