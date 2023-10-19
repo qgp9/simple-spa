@@ -71,16 +71,18 @@ const routes = {
   "/contact.html": { name: "Contact", component: PageContact },
 };
 
+const A = (attrs, ...children) => {
+  attrs.onClick = (e) => {
+    e.preventDefault();
+    router(attrs.href);
+  };
+  return a(attrs, ...children);
+}
+
 function Navbar() {
   return div({ id: "navbar" },
     Object.keys(routes).map((route) => {
-      const link = a({
-        href: route,
-        onClick: (e) => {
-          e.preventDefault();
-          router(route);
-        },
-      }, routes[route].name);
+      const link = A({ href: route}, routes[route].name);
       return link;
     })
   );
