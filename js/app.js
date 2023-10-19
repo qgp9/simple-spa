@@ -1,21 +1,3 @@
-function PageCounter() {
-  return [Counter(), Counter(), Counter()];
-}
-
-function PageAbout() {
-  return div({ class: "card" },
-    h1("About"),
-    p("Lorem ipsum dolor sit amet consectetur adipisicing ")
-  );
-}
-
-function PageContact() {
-  return div({ class: "card" },
-    h1("Contact"),
-    p("Lorem ipsum dolor sit amet consectetur adipisicing ")
-  );
-}
-
 const routes = {
   "/index.html": { name: "Home", component: PageCounter },
   "/about.html": { name: "About", component: PageAbout },
