@@ -1,18 +1,16 @@
+import { createSignal } from "../lib/simple-signal.js";
 import { div, h1, span, button } from "/js/lib/simple-spa.js";
 export default function Counter() {
-  let count = 0;
-  const countView = span({ id: "count-view" }, 0);
+  const count = createSignal(0);
   const increase = () => {
-    count++;
-    countView.innerText = count;
+    count.set(count() + 1);
   };
   const decrease = () => {
-    count--;
-    countView.innerText = count;
+    count.set(count() - 1);
   };
 
   return div({ class: "card" },
-    h1("Count ", countView),
+    h1("Count ", count.dom()),
     div(
       { class: "btn-box" },
       button({ class: "btn btn-primary", onClick: increase }, "Increase"),
