@@ -1,15 +1,22 @@
-import { reRender, a } from "./simple-spa.js";
+import { createSignal, createEffect } from "./simple-signal.js";
+import { a } from "./simple-spa.js";
+
+const path = createSignal(window.location.pathname);
 
 function Routes({routes}) {
-  const currentPath = window.location.pathname;
-  return routes[currentPath].component()
+  const wrapper = document.createElement("div");
+  createEffect(() => {
+    wrapper.replaceChildren(routes[path()].component());
+  }, [path]);
+
+  return wrapper;
 }
 
 function route(href) {
   let currentPath = window.location.pathname;
   if (href && href === currentPath) return;
   window.history.pushState(null, null, href);
-  reRender();
+  path.set(href);
 }
 
 const A = (attrs, ...children) => {
