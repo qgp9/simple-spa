@@ -71,21 +71,16 @@ const routes = {
   "/contact.html": { name: "Contact", component: PageContact },
 };
 
-function handleLinks() {
-  const links = document.querySelectorAll("a");
-  links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const href = link.getAttribute("href");
-      router(href);
-    });
-  });
-}
-
 function Navbar() {
   return div({ id: "navbar" },
     Object.keys(routes).map((route) => {
-      const link = a({ href: route }, routes[route].name);
+      const link = a({
+        href: route,
+        onClick: (e) => {
+          e.preventDefault();
+          router(route);
+        },
+      }, routes[route].name);
       return link;
     })
   );
@@ -104,6 +99,5 @@ function router(href) {
   }
   const currentPath = href || window.location.pathname;
   document.getElementById("app").replaceChildren(App(currentPath));
-  handleLinks();
 }
 router();
