@@ -1,4 +1,5 @@
-function Counter() {
+import { div, h1, span, button } from "/js/lib/simple-spa.js";
+export default function Counter() {
   let count = 0;
   const countView = span({ id: "count-view" }, 0);
   const increase = () => {

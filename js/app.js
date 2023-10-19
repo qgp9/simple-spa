@@ -1,3 +1,10 @@
+import { div } from "/js/lib/simple-spa.js";
+import { Routes, A } from "/js/lib/simple-router.js";
+
+import PageCounter from "./pages/PageCounter.js";
+import PageAbout from "./pages/PageAbout.js";
+import PageContact from "./pages/PageContact.js";
+
 const routes = {
   "/index.html": { name: "Home", component: PageCounter },
   "/about.html": { name: "About", component: PageAbout },
@@ -20,4 +27,4 @@ function App() {
   );
 }
 
-render(App, document.getElementById("app"));
+export default App;

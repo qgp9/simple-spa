@@ -30,6 +30,7 @@ const button = (...args) => h("button", ...args);
 const span = (...args) => h("span", ...args);
 
 let _renderArgs = {};
+
 function reRender() {
   _renderArgs.container.replaceChildren(_renderArgs.component());
 }
@@ -37,4 +38,15 @@ function reRender() {
 function render(component, container) {
   _renderArgs = {component, container};
   reRender();
+}
+
+export {
+  render,
+  reRender,
+  div,
+  h1,
+  p,
+  a,
+  button,
+  span,
 }

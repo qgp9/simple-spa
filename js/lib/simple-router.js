@@ -1,3 +1,5 @@
+import { reRender, a } from "./simple-spa.js";
+
 function Routes({routes}) {
   const currentPath = window.location.pathname;
   return routes[currentPath].component()
@@ -16,4 +18,10 @@ const A = (attrs, ...children) => {
     route(attrs.href);
   };
   return a(attrs, ...children);
+}
+
+export {
+  Routes,
+  route,
+  A,
 }
